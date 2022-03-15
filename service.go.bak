@@ -44,12 +44,6 @@ func (s *Service) Translate(ctx context.Context, from, to language.Tag, data str
 	request_param := from.String() + to.String() + data
 	fmt.Println("requested params: " + request_param)
 
-	resp1, found := s.cache_value.Get(request_param)
-	if found {
-		fmt.Println("found cache result:" + resp1.(string))
-		return resp1.(string), nil
-	}
-
 	for _, backoff := range backoffSchedule {
 		resp, err = s.translator.Translate(ctx, from, to, data)
 
